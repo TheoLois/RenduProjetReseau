@@ -1,0 +1,1214 @@
+Lite des commandes ou des configurations utiles sur les machines pour l'installation de la partie client, il s'agit du serveur final donc de l'"Answer Network" du joueur X avec X le numéro du joueur:
+
+IMPORTANT: Pour accéder aux "Activity Wizard" des joueurs ou au routeurs bloqués aux joueurs, le mot de passe est: AdminExclu
+
+PARTIE CLIENT
+
+######## PC joueur: ########
+Aucune
+
+
+######## Switch ########
+Aucune
+
+
+######## Server 1: ########
+Server1 > Services > DHCP 
+Service: On
+Gateway: 19X.1.1.254
+DNS: 180.1.1.241
+Start IP @: 19X.1.1.240
+Mask: 255.255.255.240
+
+Server1 > Desktop > IP Configuration
+IP @: 19X.1.1.241
+Mask: 255.255.255.240
+Gateway: 19X.1.1.254
+DNS: 180.1.1.241
+
+
+######## Router 1: ########
+Router1 > Config > Static
+cf. Routage de la partie client.txt
+
+Router1 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 19X.1.1.254
+Mask: 255.255.255.24O
+
+Router1 > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 19X.2.1.254
+Mask: 255.255.255.252
+
+
+######## Switch 2: ########
+Aucune
+
+
+######## Router 2: ########
+Router2 > Config > Static
+cf. Routage de la partie client.txt
+
+Router2 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 19X.2.1.253
+Mask: 255.255.255.252
+
+Router2 > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 19X.3.1.254
+Mask: 255.255.255.248
+
+Router2 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+
+######## Switch 3: ########
+Aucune
+
+
+######## Router 3: ########
+Router3 > Config > Static
+cf. Routage de la partie client.txt
+
+Router3 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 190.1.1.254
+Mask: 255.255.255.248
+
+Router3 > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 19X.3.1.252
+Mask: 255.255.255.248
+
+
+######## Switch 4: ########
+Switch4 > Config > Interface > FastEthernet0/1
+Port Status: On
+
+Switch4 > Config > Interface > FastEthernet0/2
+Port Status: On
+
+Switch4 > Config > Interface > FastEthernet0/3
+Port Status: On
+
+Switch4 > Config > Interface > FastEthernet0/4
+Port Status: 
+
+Switch4 > CLI (Port mirroring)
+enable
+configure terminal
+monitor session 1 source interface fastethernet0/1
+monitor session 1 source interface fastethernet0/2
+monitor session 1 destination interface fastethernet0/4
+
+Switch4 > CLI (VLAN 1)
+enable
+configure terminal
+interface vlan 1
+ip address 190.1.1.251 255.255.255.248
+exit
+
+Switch4 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+
+######## Server 2: ########
+Server2 > Programming
+Voir le code de ce serveur.
+
+
+######## PC: ########
+PC > Programming
+Voir le code de ce PC.
+
+
+######## Sniffer: ########
+Sniffer > GUI
+Service: On
+Incoming Packets: Port0 (par défaut)
+Edit Filters (en fonction des trames à intercepter)
+
+
+######## Router 4: ########
+Router4 > Config > Static
+cf. Routage de la partie client.txt
+
+Router4 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 19X.3.1.253
+Mask: 255.255.255.248
+
+Router4 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+Router4 > CLI (VLAN 10)
+enable
+configure terminal
+interface fastethernet1/0.10
+encapsulation dot1Q 10
+ip address 19X.4.10.254 255.255.255.224
+no shutdown
+
+Router4 > CLI (VLAN 20)
+enable
+configure terminal
+interface fastethernet1/0.10
+encapsulation dot1Q 10
+ip address 19X.4.20.254 255.255.255.252
+no shutdown
+
+Router4 > CLI (Banner motd)
+enable
+configure terminal
+banner motd E
+(message)
+E
+
+######## Switch 5: ########
+Switch5 > CLI (port Trunk)
+enable
+configure terminal
+interface fastethernet0/1
+switchport mode trunk
+exit
+
+Switch5 > CLI (VLAN 10)
+vlan 10
+name vlan10
+exit
+interface fastethernet0/2
+switchport mode access
+switchport access vlan 10
+exit
+
+Switch5 > CLI (VLAN 20)
+vlan 20
+name vlan20
+exit
+interface fastethernet0/3
+switchport mode access
+switchport access vlan 20
+exit
+
+
+######## Server 3: ########
+Server3 > Services > index.html (edit)
+Voir le code.
+
+
+######## Router 5: ########
+Router3 > Config > Static
+cf. Routage de la partie client.txt
+
+Router5 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 19X.4.20.253
+Mask: 255.255.255.252
+
+Router5 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 19X.5.1.254
+Mask: 255.255.255.252
+
+
+######## Laptop: ########
+Laptop > Physical > Modules > WPC300N (Wifi)
+
+
+######## Router 6: ########
+Router6 > Config > Static
+cf. Routage de la partie client.txt
+
+Router6 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.1.1.253
+Mask: 255.255.255.252
+
+Router6 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.2.1.254
+Mask: 255.255.255.252
+
+Router6 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 7: ########
+Router7 > Config > Static
+cf. Routage de la partie client.txt
+
+Router7 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 19X.4.1.254
+Mask: 255.255.255.224
+
+Router7 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.5.1.254
+Mask: 255.255.255.252
+
+Router7 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+
+######## Router 8: ########
+Router8 > Config > Static
+cf. Routage de la partie client.txt
+
+Router8 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.17.1.254
+Mask: 255.255.255.240
+
+Router8 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.18.1.254
+Mask: 255.255.255.240
+
+
+######## Router 9: ########
+Router9 > Config > Static
+cf. Routage de la partie client.txt
+
+Router9 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.9.1.254
+Mask: 255.255.255.240
+
+Router9 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.10.1.254
+Mask: 255.255.255.240
+
+
+######## Router 10: ########
+Router10 > Config > Static
+cf. Routage de la partie client.txt
+
+Router10 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.12.1.254
+Mask: 255.255.255.252
+
+Router10 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.13.1.254
+Mask: 255.255.255.240
+
+
+######## Router 11: ########
+Router11 > Config > Static
+cf. Routage de la partie client.txt
+
+Router11 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.15.1.254
+Mask: 255.255.255.240
+
+Router11 > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.16.1.254
+Mask: 255.255.255.252
+
+PARTIE SERVEUR
+
+######## Router 1(1): ########
+Router > Config > Static
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.2.1.253
+Mask: 255.255.255.252
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.3.1.254
+Mask: 255.255.255.128
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 4: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.254
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.8.1.254
+Mask: 255.255.255.240
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.5.1.253
+Mask: 255.255.255.252
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 1: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.253
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.19.1.254
+Mask: 255.255.255.240
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.18.1.253
+Mask: 255.255.255.252
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 2: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.252
+Mask: 255.255.255.240
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.10.1.253
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 3: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.14.10.254
+Mask: 255.255.255.252
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.13.1.253
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password AdminExclu
+
+Router > CLI (Banner motd)
+enable
+configure terminal
+banner motd E
+(message)
+E
+
+######## Router 5: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.14.20.254
+Mask: 255.255.255.248
+
+Router > Config > Interface > Serial2/0
+Port Status: On
+IP @: 191.16.1.253
+Mask: 255.255.255.252
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 7: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.251
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.7.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 8: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.250
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.11.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 9: ########
+Router > Config > Static
+
+Router > Config
+access-list 1 permit host 191.19.1.254
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.8.1.253
+Mask: 255.255.255.240
+ip access-list 1 in
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.21.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password C1SC0
+exit
+enable password C1SC0
+
+######## Router 10: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.19.1.253
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.21.1.253
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 18: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.21.1.252
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.22.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 18: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.21.1.251
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.23.1.254
+Mask: 255.255.255.252
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 21: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.19.1.251
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.24.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 20: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.19.1.252
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.20.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 28: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.6.1.249
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.25.1.254
+Mask: 255.255.255.0
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password NotaKnot
+exit
+enable password NotaKnot
+
+Router > CLI (Banner motd)
+enable
+configure terminal
+banner motd E
+(message)
+E
+
+######## Router 29: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.25.1.253
+Mask: 255.255.255.240
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.26.1.254
+Mask: 255.255.255.240
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 33: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.21.1.249
+Mask: 255.255.255.0
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.27.1.254
+Mask: 255.255.255.248
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AdminExclu
+exit
+enable password AdminExclu
+
+######## Router 31: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.25.1.250
+Mask: 255.255.255.0
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 191.28.1.253
+Mask: 255.255.255.224
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 32: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: Off
+IP @: 191.25.1.251
+Mask: 255.255.255.0
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password AccessToSecondKnot
+exit
+enable password AccessToSecondKnot
+
+Router > CLI (VLAN 10)
+enable
+configure terminal
+interface fastethernet 1/0.10
+encapsulation dot1Q 10
+ip address 191.29.10.254 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 20)
+enable
+configure terminal
+interface fastethernet1/0.20
+encapsulation dot1Q 10
+ip address 191.28.1.252 255.255.255.224
+no shutdown
+
+######## Router 6: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.21.1.250
+Mask: 255.255.255.0
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 201.X0.1.254
+Mask: 255.255.255.0
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Router 34: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 191.29.10.253
+Mask: 255.255.255.0
+
+Router > Config > Interface > FastEthernet1/0
+Port Status: On
+IP @: 200.1.1.X
+Mask: 255.255.255.0
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+######## Noeud1: ########
+Router > Config > Static
+
+Router > Config > Interface > FastEthernet0/0
+Port Status: On
+
+Router > CLI (Telnet)
+enable
+configure terminal
+line vty 0 15
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+Router > CLI (VLAN 10)
+enable
+configure terminal
+interface fastethernet1/0.10
+encapsulation dot1Q 10
+ip address 201.10.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 20)
+enable
+configure terminal
+interface fastethernet1/0.20
+encapsulation dot1Q 20
+ip address 201.20.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 30)
+enable
+configure terminal
+interface fastethernet1/0.30
+encapsulation dot1Q 30
+ip address 201.30.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 40)
+enable
+configure terminal
+interface fastethernet1/0.40
+encapsulation dot1Q 40
+ip address 201.40.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 50)
+enable
+configure terminal
+interface fastethernet1/0.50
+encapsulation dot1Q 50
+ip address 201.50.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 60)
+enable
+configure terminal
+interface fastethernet1/0.60
+encapsulation dot1Q 60
+ip address 201.60.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 70)
+enable
+configure terminal
+interface fastethernet1/0.70
+encapsulation dot1Q 70
+ip address 201.70.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (VLAN 80)
+enable
+configure terminal
+interface fastethernet1/0.80
+encapsulation dot1Q 80
+ip address 201.80.1.253 255.255.255.0
+no shutdown
+
+Router > CLI (Banner motd)
+enable
+configure terminal
+banner motd E
+(message)
+E
+
+######## Noeud2: ########
+Router4 > Config > Static
+cf. Routage de la partie client.txt
+
+Router4 > Config > Interface > FastEthernet0/0
+Port Status: On
+IP @: 200.1.1.254
+Mask: 255.255.255.0
+
+Router4 > CLI (Telnet)
+enable
+configure terminal
+line vty 015
+transport input telnet
+no login
+password cisco
+exit
+enable password cisco
+
+Router4 > CLI (Banner motd)
+enable
+configure terminal
+banner motd E
+(message)
+E
+
+######## Switch 1(1): ########
+Switch > CLI (port Trunk)
+enable
+configure terminal
+interface fastethernet0/9
+switchport mode trunk
+exit
+
+Switch > CLI (VLAN 10)
+vlan 10
+name vlan10
+exit
+interface fastethernet0/1
+switchport mode access
+switchport access vlan 10
+exit
+
+Switch > CLI (VLAN 20)
+vlan 20
+name vlan20
+exit
+interface fastethernet0/2
+switchport mode access
+switchport access vlan 20
+exit
+
+Switch > CLI (VLAN 30)
+vlan 30
+name vlan30
+exit
+interface fastethernet0/3
+switchport mode access
+switchport access vlan 30
+exit
+
+Switch > CLI (VLAN 40)
+vlan 40
+name vlan40
+exit
+interface fastethernet0/4
+switchport mode access
+switchport access vlan 40
+exit
+
+Switch > CLI (VLAN 50)
+vlan 50
+name vlan50
+exit
+interface fastethernet0/5
+switchport mode access
+switchport access vlan 50
+exit
+
+Switch > CLI (VLAN 60)
+vlan 60
+name vlan60
+exit
+interface fastethernet0/6
+switchport mode access
+switchport access vlan 60
+exit
+
+Switch > CLI (VLAN 70)
+vlan 70
+name vlan70
+exit
+interface fastethernet0/7
+switchport mode access
+switchport access vlan 70
+exit
+
+Switch > CLI (VLAN 80)
+vlan 80
+name vlan80
+exit
+interface fastethernet0/8
+switchport mode access
+switchport access vlan 80
+exit
+
+######## Switch 11: ########
+Switch5 > CLI (port Trunk)
+enable
+configure terminal
+interface fastethernet0/10
+switchport mode trunk
+exit
+
+Switch5 > CLI (VLAN 10)
+vlan 10
+name vlan10
+exit
+interface fastethernet0/6
+switchport mode access
+switchport access vlan 10
+exit
+
+Switch5 > CLI (VLAN 20)
+vlan 20
+name vlan20
+exit
+interface fastethernet0/3
+switchport mode access
+switchport access vlan 20
+exit
+interface fastethernet0/4
+switchport mode access
+switchport access vlan 20
+exit
+
+######## Server 6: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.3.1.202
+Mask: 255.255.255.128
+Gateway:191.3.1.254
+
+######## Server 3: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.3.1.167
+Mask: 255.255.255.128
+Gateway: 191.3.1.254
+
+######## Server 11: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.14.20.249
+Mask: 255.255.255.248
+Gateway: 191.14.20.254
+
+######## Server 13: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.22.1.241
+Mask: 255.255.255.240
+Gateway: 191.22.1.254
+
+######## Server 14: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.23.1.253
+Mask: 255.255.255.252
+Gateway: 191.22.1.254
+
+######## Server 8: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.8.1.241
+Mask: 255.255.255.240
+Gateway: 191.8.1.254
+
+######## Server 10: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.24.1.241
+Mask: 255.255.255.240
+Gateway: 191.24.1.254
+
+######## Server 9: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.20.1.241
+Mask: 255.255.255.240
+Gateway: 191.20.1.254
+
+######## Server 12: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.7.1.241
+Mask: 255.255.255.240
+Gateway: 191.7.1.254
+
+######## Server 0: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.11.1.241
+Mask: 255.255.255.240
+Gateway: 191.11.1.254
+
+######## Server 24: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.27.1.249
+Mask: 255.255.255.248
+Gateway: 191.27.1.254
+
+######## Server 29: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.26.1.241
+Mask: 255.255.255.240
+Gateway: 191.26.1.254
+
+######## Server 23: ########
+Server > Services > HTTP
+(message in index)
+
+Server > Desktop > IP Configuration
+IP @: 191.28.1.2226
+Mask: 255.255.255.224
+Gateway: 191.22.1.253
